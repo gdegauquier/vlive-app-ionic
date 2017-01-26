@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Hero } from './hero';
 
 import { NavController } from 'ionic-angular';
 
@@ -8,17 +9,32 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-	  	name = "aaaa";
-  	test = "test";
-
-  	this.http
-           .get('http://mydomain.azurewebsites.net/api/products', { headers: headers })
-           .map(res => res.json().data);
-
-  constructor(public navCtrl: NavController) {
+	title:string;
+	//content:string;
+	content:string[];
+	heroes:Hero[];
+	clickMessage:string;	
 
 
+	constructor(){
+		this.title = 'v-live';
+		this.content = ['villes', 'stations', 'velos','emplacements'];
 
+		this.heroes = [
+			new Hero(1, 'test_1'),
+			new Hero(2, 'test_2'),
+			new Hero(3, 'test_3'),
+			new Hero(4, 'test_4')
+		] ;
+
+	}
+
+
+
+
+  onClickMe() {
+    this.clickMessage = 'You are my hero!';
   }
+
 
 }

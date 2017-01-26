@@ -1,19 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>V-Live</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content >
-<ion-list-header>{{name}}</ion-list-header>
-  <ion-list>
-  <ion-item>
-    <ion-thumbnail item-left>
-      <img src="img/thumbnail-totoro.png">
-    </ion-thumbnail>
-    <h2>My Neighbor Totoro</h2>
-    <p>Hayao Miyazaki • 1988</p>
-    <button ion-button clear item-right>View</button>
-  </ion-item>
-</ion-list>
+<ion-content padding>
+  <h2>Welcome to {{title}} !</h2>
+  
+
+ <ul>
+      <li *ngFor="let row of heroes">
+        {{ row.name }}
+      </li>
+  </ul>
+
+  <p *ngIf="heroes.length > 3">There are many heroes!</p>
+  <p>{{clickMessage}}</p>
+
+
+<button (click)="onClickMe()">Click me!</button>
+
+
 </ion-content>
