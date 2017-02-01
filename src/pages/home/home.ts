@@ -1,39 +1,36 @@
 import { Component } from '@angular/core';
-import { Hero } from './hero';
+
+import { OnInit } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
+import {Station} from './station';
+import {StationService} from './station.service';
+
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [StationService]
 })
 export class HomePage {
 
-	title:string;
-	//content:string;
-	content:string[];
-	heroes:Hero[];
-	clickMessage:string;	
+  stations : Station[] ;
 
-
-	constructor(){
-		this.title = 'v-live';
-		this.content = ['villes', 'stations', 'velos','emplacements'];
-
-		this.heroes = [
-			new Hero(1, 'test_1'),
-			new Hero(2, 'test_2'),
-			new Hero(3, 'test_3'),
-			new Hero(4, 'test_4')
-		] ;
-
-	}
+  constructor(navCtrl: NavController, public stationService : StationService) {
 
 
 
+  }
 
-  onClickMe() {
-    this.clickMessage = 'You are my hero!';
+  
+
+  ngOnInit(): void {
+    this.getStations();
+  }
+
+    getStations(): void {
+    //this.heroes = this.heroService.getHeroes();
+    this.stationService.getStations().then(stations => this.stations = stations);
   }
 
 

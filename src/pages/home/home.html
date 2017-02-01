@@ -1,24 +1,38 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{title}}</ion-title>
+    <ion-title>Stations</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to {{title}} !</h2>
-  
-
- <ul>
-      <li *ngFor="let row of heroes">
-        {{ row.name }}
-      </li>
-  </ul>
-
-  <p *ngIf="heroes.length > 3">There are many heroes!</p>
-  <p>{{clickMessage}}</p>
 
 
-<button (click)="onClickMe()">Click me!</button>
+<ion-content class="list-avatar-page">
 
+<ion-searchbar>
+aaaa
+</ion-searchbar>
+
+
+  <ion-list>
+
+
+
+  <ion-item *ngFor="let station of stations; ">
+      <ion-avatar item-left>
+        <img src="assets/img/map.png">
+      </ion-avatar>
+      <h2>{{station.name}}</h2>
+      <p>{{station.town_name}}</p>
+      <ion-note item-right><ion-icon name="bicycle"></ion-icon> {{station.bikes}}  • <ion-icon name="flag"></ion-icon> {{station.attachs}}
+      
+      <span *ngIf="station.pay == 1">
+      • <ion-icon name="card"></ion-icon>
+      </span>
+      </ion-note>
+
+    </ion-item>
+
+     </ion-list>
 
 </ion-content>
+
