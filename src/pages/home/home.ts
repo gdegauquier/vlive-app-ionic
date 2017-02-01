@@ -15,6 +15,10 @@ import {StationService} from './station.service';
 export class HomePage {
 
   stations : Station[] ;
+  query: string = '';
+
+  init: string = null ;
+
 
   constructor(navCtrl: NavController, public stationService : StationService) {
 
@@ -25,12 +29,28 @@ export class HomePage {
   
 
   ngOnInit(): void {
-    this.getStations();
+    if ( this.init == null ){
+      this.getStations();
+      this.init = "ok";
+    }
   }
 
-    getStations(): void {
+  getStations(): void {
     //this.heroes = this.heroService.getHeroes();
     this.stationService.getStations().then(stations => this.stations = stations);
+  }
+
+  filterItems() {
+
+      this.getStations();
+
+      let val = this.query;
+      if (val && val.trim() != '') {
+        this.stations = this.stations.filter((station) => {
+        return (station.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+
   }
 
 

@@ -1,16 +1,23 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Stations</ion-title>
-  </ion-navbar>
+  <ion-toolbar primary>
+    <ion-row>
+      <ion-col (click)="filterItems()" width-10>
+        <button ion-button clear icon-only>
+      <ion-icon color="dark" name="search"></ion-icon>
+    </button>
+      </ion-col>
+      <ion-col width-90>
+        <ion-input [(ngModel)]="query" type="text" placeholder="Search..."></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 
 
 <ion-content class="list-avatar-page">
 
-<ion-searchbar>
-aaaa
-</ion-searchbar>
+
 
 
   <ion-list>
