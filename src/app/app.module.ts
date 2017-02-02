@@ -6,7 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { StationService }         from '../pages/home/station.service';
+import { StationService }  from '../pages/home/station.service';
+import {StationFilterPipe} from '../pages/home/station-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { StationService }         from '../pages/home/station.service';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage, 
+    StationFilterPipe
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -27,8 +29,10 @@ import { StationService }         from '../pages/home/station.service';
     HomePage,
     TabsPage
   ],
-  providers: [
-  {provide: ErrorHandler, useClass: IonicErrorHandler}, StationService
+  providers: 
+  [
+    {provide: ErrorHandler, useClass: IonicErrorHandler}, 
+    StationService
   ]
 })
 export class AppModule {}

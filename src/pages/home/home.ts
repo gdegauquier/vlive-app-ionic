@@ -2,41 +2,39 @@ import { Component } from '@angular/core';
 
 import { OnInit } from '@angular/core';
 
+
 import { NavController } from 'ionic-angular';
 
 import {Station} from './station';
 import {StationService} from './station.service';
+import {StationFilterPipe} from './station-filter.pipe';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [StationService]
+  providers: [StationService],
+  pipes: [StationFilterPipe]
 })
 export class HomePage {
 
   stations : Station[] ;
+  numbers = [];
   query: string = '';
 
-  init: string = null ;
 
 
   constructor(navCtrl: NavController, public stationService : StationService) {
-
-
-
   }
 
   
 
   ngOnInit(): void {
-    if ( this.init == null ){
+
+
       this.getStations();
-      this.init = "ok";
-    }
   }
 
   getStations(): void {
-    //this.heroes = this.heroService.getHeroes();
     this.stationService.getStations().then(stations => this.stations = stations);
   }
 

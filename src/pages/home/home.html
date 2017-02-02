@@ -7,7 +7,7 @@
     </button>
       </ion-col>
       <ion-col width-90>
-        <ion-input [(ngModel)]="query" type="text" placeholder="Search..."></ion-input>
+        <ion-input #inputFilter (keyup)="0" type="text" placeholder="Search..." value=""></ion-input>
       </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -24,7 +24,7 @@
 
 
 
-  <ion-item *ngFor="let station of stations; ">
+  <ion-item *ngFor="let station of stations | stationFilter:inputFilter.value ">
       <ion-avatar item-left>
         <img src="assets/img/map.png">
       </ion-avatar>
