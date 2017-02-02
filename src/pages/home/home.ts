@@ -7,13 +7,12 @@ import { NavController } from 'ionic-angular';
 
 import {Station} from './station';
 import {StationService} from './station.service';
-import {StationFilterPipe} from './station-filter.pipe';
+
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [StationService],
-  pipes: [StationFilterPipe]
+  providers: [StationService]
 })
 export class HomePage {
 
@@ -22,33 +21,37 @@ export class HomePage {
   query: string = '';
 
 
-
   constructor(navCtrl: NavController, public stationService : StationService) {
   }
 
   
-
   ngOnInit(): void {
-
 
       this.getStations();
   }
 
+
+  //keyboard
+  onKey(value: string) {
+    this.query = value ;
+    this.filterItems( value );
+    console.log(this.stations);
+  }
+
+  //get DATA
   getStations(): void {
     this.stationService.getStations().then(stations => this.stations = stations);
   }
 
-  filterItems() {
+  filterItems( query:string ) {
+      console.log("query : "+query.replace(/<\/?[^>]+(>|$)/g, ""));
 
-      this.getStations();
-
-      let val = this.query;
-      if (val && val.trim() != '') {
-        this.stations = this.stations.filter((station) => {
-        return (station.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+      if ( query && query != null && query.length > 0 ){
+        this.stationService.getFilteredStations( query ).then(stations => this.stations = stations);
+        return ;
     }
-
+    this.getStations();
+      
   }
 
 

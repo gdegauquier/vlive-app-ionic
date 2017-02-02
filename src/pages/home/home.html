@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar primary>
     <ion-row>
-      <ion-col (click)="filterItems()" width-10>
+      <ion-col  width-10>
         <button ion-button clear icon-only>
       <ion-icon color="dark" name="search"></ion-icon>
     </button>
       </ion-col>
       <ion-col width-90>
-        <ion-input #inputFilter (keyup)="0" type="text" placeholder="Search..." value=""></ion-input>
+        <ion-input #box (keyup)="onKey(  escape(box.value))" type="text" placeholder="Search..." value=""></ion-input>
       </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -24,7 +24,7 @@
 
 
 
-  <ion-item *ngFor="let station of stations | stationFilter:inputFilter.value ">
+  <ion-item *ngFor="let station of stations">
       <ion-avatar item-left>
         <img src="assets/img/map.png">
       </ion-avatar>
@@ -38,6 +38,7 @@
       </ion-note>
 
     </ion-item>
+
 
      </ion-list>
 

@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 const BASE_URL = "http://localhost/vlive-api/index.php/api/v1/refresh";
+const FILTER_URL = "http://localhost/vlive-api/index.php/api/v1/filter/";
+
 const HEADER = { headers: new Headers({ 'Content-Type': 'application/json' }) };
 
 @Injectable()
@@ -18,6 +20,17 @@ constructor(private http: Http) {}
       .map(res => res.json())
       .toPromise();
   }
+
+
+  getFilteredStations( queryStr: string ) {
+    return this.http.get(FILTER_URL + queryStr)
+      .map(res => res.json())
+      .toPromise();
+  }
+
+
+
+
 
 
 
