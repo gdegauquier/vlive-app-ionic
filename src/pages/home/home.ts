@@ -7,6 +7,7 @@ import { NavController } from 'ionic-angular';
 
 import {Station} from './station';
 import {StationService} from './station.service';
+import {Base64} from './base64';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class HomePage {
   stations : Station[] ;
   numbers = [];
   query: string = '';
+  base64:Base64  = new Base64();
 
 
   constructor(navCtrl: NavController, public stationService : StationService) {
@@ -44,10 +46,10 @@ export class HomePage {
   }
 
   filterItems( query:string ) {
-      console.log("query : "+query.replace(/<\/?[^>]+(>|$)/g, ""));
+      console.log("query : "+this.base64.encode(query));
 
       if ( query && query != null && query.length > 0 ){
-        this.stationService.getFilteredStations( query ).then(stations => this.stations = stations);
+        this.stationService.getFilteredStations( this.base64.encode(query)+'' ).then(stations => this.stations = stations);
         return ;
     }
     this.getStations();
