@@ -7,7 +7,7 @@ import { NavController } from 'ionic-angular';
 
 import {Station} from './station';
 import {StationService} from './station.service';
-import {Base64} from './base64';
+
 
 
 @Component({
@@ -18,9 +18,10 @@ import {Base64} from './base64';
 export class HomePage {
 
   stations : Station[] ;
+  stationsAll : Station[];
   numbers = [];
   query: string = '';
-  base64:Base64  = new Base64();
+
 
 
   constructor(navCtrl: NavController, public stationService : StationService) {
@@ -30,6 +31,7 @@ export class HomePage {
   ngOnInit(): void {
 
       this.getStations();
+
   }
 
 
@@ -37,23 +39,39 @@ export class HomePage {
   onKey(value: string) {
     this.query = value ;
     this.filterItems( value );
-    console.log(this.stations);
+    //console.log(this.stations);
   }
 
   //get DATA
   getStations(): void {
-    this.stationService.getStations().then(stations => this.stations = stations);
+    this.stationService.getStations().then(stations => 
+      this.stations = stations 
+      ); 
   }
 
   filterItems( query:string ) {
-      console.log("query : "+this.base64.encode(query));
+      console.log("query : "+query);
 
-      if ( query && query != null && query.length > 0 ){
-        this.stationService.getFilteredStations( this.base64.encode(query)+'' ).then(stations => this.stations = stations);
+    if ( query != null && query.length > 0 ){
+        
+      if ( this.stationsAll == null || this.stationsAll.length == 0){
+            this.stationsAll = this.stations
+      }
+
+        this.stations = [];
+        for (let row of this.stationsAll) {
+          
+            if ( row.name.indexOf(   query   ) > -1 ){
+              console.log("OK ! " + row.name);
+              this.stations.push( row );
+            }
+
+        }
+
         return ;
     }
     this.getStations();
-      
+  
   }
 
 
