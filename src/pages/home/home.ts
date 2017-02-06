@@ -9,13 +9,16 @@ import { NavController } from 'ionic-angular';
 import {Station} from './station';
 import {StationService} from './station.service';
 
+import {DetailPage} from '../detail/detail'
+
 
 
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [StationService]
+  providers: [StationService],
+  entryComponents: [DetailPage]
 })
 export class HomePage {
 
@@ -101,7 +104,7 @@ export class HomePage {
 
 
   switchTabs(){
-     this.navCtrl.parent.select(1);
+     this.navCtrl.push(DetailPage);
   }
 
 

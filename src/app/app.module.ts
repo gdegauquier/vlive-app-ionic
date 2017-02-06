@@ -33,7 +33,8 @@ import {FocusDirective} from '../pages/home/focus.directive';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    DetailPage
   ],
   providers: 
   [
