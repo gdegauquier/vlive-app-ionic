@@ -55,14 +55,18 @@ export class HomePage {
     if ( query != null && query.length > 0 ){
         
       if ( this.stationsAll == null || this.stationsAll.length == 0){
-            this.stationsAll = this.stations
+            this.stationsAll = this.stations;
       }
+
+        query = query.toLowerCase();
 
         this.stations = [];
         for (let row of this.stationsAll) {
           
-            if ( row.name.indexOf(   query   ) > -1 ){
-              console.log("OK ! " + row.name);
+            if ( row.name.toLowerCase().indexOf(   query   ) > -1 || 
+                 row.town_name.toLowerCase().indexOf(   query   ) > -1
+              ){
+              //console.log("OK ! " + row.name);
               this.stations.push( row );
             }
 
