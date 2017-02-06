@@ -6,6 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { DetailPage } from '../pages/detail/detail';
+
 import { StationService }  from '../pages/home/station.service';
 import {StationFilterPipe} from '../pages/home/station-filter.pipe';
 
@@ -19,7 +21,8 @@ import {FocusDirective} from '../pages/home/focus.directive';
     HomePage,
     TabsPage, 
     StationFilterPipe,
-    FocusDirective
+    FocusDirective,
+    DetailPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
