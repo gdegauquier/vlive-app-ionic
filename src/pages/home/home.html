@@ -1,30 +1,38 @@
 <ion-header>
-  <ion-toolbar primary>
-    <ion-row>
-      <ion-col  width-10>
-        <button ion-button clear icon-only>
-      <ion-icon color="dark" name="search"></ion-icon>
-    </button>
+  <ion-toolbar>
+    <ion-row *ngIf="!search">
+
+    <!-- STEP 1 -->
+      <ion-col  width-80>
+        <ion-title>Stations</ion-title>
       </ion-col>
-      <ion-col width-90>
-        <ion-input #box (keyup)="onKey( box.value )" type="text" placeholder="Search..." value=""></ion-input>
+      <ion-col width-20>
+        <button ion-button clear icon-only (click)="setSearch()" >
+          <ion-icon color="dark" name="search" ></ion-icon>
+        </button>
+      </ion-col>
+  </ion-row>
+
+
+    <!-- STEP 2 -->
+     <ion-row *ngIf="search">
+      <ion-col  width-20>
+        <button ion-button clear icon-only (click)="setSearch()" >
+          <ion-icon color="dark" name="arrow-back" ></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col width-80>
+        <ion-input id="searchInput" #box (keyup)="onKey( box.value )"  type="text" placeholder="Recherche..." value=""  ></ion-input>
       </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content class="list-avatar-page">
-
-
-
 
   <ion-list>
 
-
-
-  <ion-item *ngFor="let station of stations">
+  <ion-item *ngFor="let station of stations" (click)="switchTabs()">
       <ion-avatar item-left>
         <img src="assets/img/map.png">
       </ion-avatar>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {EventEmitter} from "@angular/common/src/facade/async";
 
 import { OnInit } from '@angular/core';
 
@@ -7,6 +8,7 @@ import { NavController } from 'ionic-angular';
 
 import {Station} from './station';
 import {StationService} from './station.service';
+
 
 
 
@@ -21,10 +23,13 @@ export class HomePage {
   stationsAll : Station[];
   numbers = [];
   query: string = '';
-
+  search:boolean = false;
+  public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
+  navCtrl ;
 
 
   constructor(navCtrl: NavController, public stationService : StationService) {
+     this.navCtrl = navCtrl;
   }
 
   
@@ -77,6 +82,28 @@ export class HomePage {
     this.getStations();
   
   }
+
+  setSearch(){
+
+      this.search = !this.search;
+
+      if ( ! this.search){
+
+        this.filterItems('');
+
+
+      }  
+
+
+
+
+  }
+
+
+  switchTabs(){
+     this.navCtrl.parent.select(1);
+  }
+
 
 
 }

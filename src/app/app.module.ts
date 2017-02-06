@@ -9,6 +9,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StationService }  from '../pages/home/station.service';
 import {StationFilterPipe} from '../pages/home/station-filter.pipe';
 
+import {FocusDirective} from '../pages/home/focus.directive';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -16,7 +18,8 @@ import {StationFilterPipe} from '../pages/home/station-filter.pipe';
     ContactPage,
     HomePage,
     TabsPage, 
-    StationFilterPipe
+    StationFilterPipe,
+    FocusDirective
   ],
   imports: [
     IonicModule.forRoot(MyApp)
