@@ -6,7 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 const BASE_URL = "http://localhost/vlive-api/index.php/api/v1/refresh";
-const FILTER_URL = "http://localhost/vlive-api/index.php/api/v1/filter/";
+//const FILTER_URL = "http://localhost/vlive-api/index.php/api/v1/filter/";
+const STATION_URL = "http://localhost/vlive-api/index.php/api/v1/stations/";
 
 const HEADER = { headers: new Headers({ 'Content-Type': 'application/json' }) };
 
@@ -22,11 +23,19 @@ constructor(private http: Http) {}
   }
 
 
-  getFilteredStations( queryStr: string ) {
+  /*getFilteredStations( queryStr: string ) {
     return this.http.get(FILTER_URL + queryStr)
       .map(res => res.json())
       .toPromise();
-  }
+  }*/
+
+  getStationById( stationId:number ){
+
+    return this.http.get(STATION_URL + stationId)
+      .map(res => res.json())
+      .toPromise();
+
+  } 
 
 
 

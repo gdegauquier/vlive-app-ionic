@@ -31,7 +31,7 @@
 
   <ion-list>
 
-  <ion-item *ngFor="let station of stations" (click)="switchTabs()">
+  <ion-item *ngFor="let station of stations" (click)="switchTabs( station.id )">
       <ion-avatar item-left>
         <img src="assets/img/map.png">
       </ion-avatar>

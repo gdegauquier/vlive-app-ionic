@@ -103,8 +103,8 @@ export class HomePage {
   }
 
 
-  switchTabs(){
-     this.navCtrl.push(DetailPage);
+  switchTabs( stationId:number ){
+     this.navCtrl.push(DetailPage, { id : stationId } );
   }
 
 
