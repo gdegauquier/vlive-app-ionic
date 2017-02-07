@@ -11,7 +11,24 @@
 <ion-content>
 <ion-card *ngIf="stations">
 
-<img src="http://localhost/vlive-api/{{stations[0].picture_url}}">
+
+		<ion-slides [options]="_options" #mySlider>
+    
+    <ion-slide>
+      <img src="https://maps.googleapis.com/maps/api/staticmap?center={{stations[0].latitude}},{{stations[0].longitude}}	&zoom=16&size=640x480%20&maptype=roadmap&markers=color:red|{{stations[0].latitude}},{{stations[0].longitude}}">
+     </ion-slide>
+
+
+    <ion-slide>
+      <img src="http://maps.googleapis.com/maps/api/streetview?size=640x480&location={{stations[0].latitude}},{{stations[0].longitude}}&fov=120&heading=235&pitch=10&sensor=false;">
+     </ion-slide>
+
+    <ion-slide>
+      <img src="https://maps.googleapis.com/maps/api/staticmap?center={{stations[0].latitude}},{{stations[0].longitude}}	&zoom=16&size=640x480%20&maptype=satellite&markers=color:red|{{stations[0].latitude}},{{stations[0].longitude}}">
+     </ion-slide>
+ 
+</ion-slides>
+
 
 <ion-item >
     <ion-icon name="locate" item-left large></ion-icon>
@@ -24,11 +41,17 @@
     <span item-left ><ion-icon name="bicycle"></ion-icon> {{ stations[0].bikes }}</span>
     <span item-left ><ion-icon name="flag"></ion-icon> {{stations[0].attachs}}</span>
     <span item-left *ngIf="stations[0].pay == 1"><ion-icon name="card"></ion-icon></span>
+
+    <button ion-button icon-left clear item-right>
+      <ion-icon name="locate"></ion-icon>
+      Show
+    </button>
     
     <button ion-button icon-left clear item-right>
       <ion-icon name="navigate"></ion-icon>
       Start
     </button>
+
   </ion-item>
 
 </ion-card>

@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
 import { NavController , NavParams } from 'ionic-angular';
 
@@ -13,11 +12,20 @@ import {StationService} from '../home/station.service';
 })
 export class DetailPage{
 
+	_options;
 	id:number;
 	stations:Station[];
+	@ViewChild('mySlider') mySlider: any;
 
   constructor( navParams : NavParams, public stationService : StationService ) {
 	this.id = navParams.get("id");
+
+	this._options = {
+	    slidesPerView:1,
+	    pager: true,
+	    onInit:()=>{}
+	}
+
   }
 
     ngOnInit(): void {
