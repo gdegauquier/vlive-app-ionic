@@ -4,7 +4,7 @@ import {EventEmitter} from "@angular/common/src/facade/async";
 import { OnInit } from '@angular/core';
 
 
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import {Station} from './station';
 import {StationService} from './station.service';
@@ -22,6 +22,7 @@ import {DetailPage} from '../detail/detail'
 })
 export class HomePage {
 
+  public loading ;
   stations : Station[] ;
   stationsAll : Station[];
   numbers = [];
@@ -31,8 +32,15 @@ export class HomePage {
   navCtrl ;
 
 
-  constructor(navCtrl: NavController, public stationService : StationService) {
+  constructor(navCtrl: NavController, 
+              public stationService : StationService, public loadingCtrl: LoadingController) {
      this.navCtrl = navCtrl;
+
+     // Create the popup
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading data...'
+    });
+
   }
 
   
@@ -52,9 +60,14 @@ export class HomePage {
 
   //get DATA
   getStations(): void {
+
+    this.loading.present(); 
+    
     this.stationService.getStations().then(stations => 
       this.stations = stations 
       ); 
+
+    this.loading.dismiss();
   }
 
   filterItems( query:string ) {
@@ -91,20 +104,15 @@ export class HomePage {
       this.search = !this.search;
 
       if ( ! this.search){
-
         this.filterItems('');
-
-
       }  
-
-
-
 
   }
 
 
   switchTabs( stationId:number ){
-     this.navCtrl.push(DetailPage, { id : stationId } );
+      console.log(stationId);
+      this.navCtrl.push(DetailPage, { id : stationId } );
   }
 
 

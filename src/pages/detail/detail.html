@@ -1,13 +1,35 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      {{ stations }}
+    <ion-title *ngIf="stations">
+
+  {{stations[0].id}} - {{stations[0].name}}
+
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+<ion-card *ngIf="stations">
 
-test
+<img src="http://localhost/vlive-api/{{stations[0].picture_url}}">
 
+<ion-item >
+    <ion-icon name="locate" item-left large></ion-icon>
+    <h2>{{stations[0].id}} - {{stations[0].name}}</h2>
+    <p>{{stations[0].address}}</p>
+     <p>{{stations[0].town_name}}</p>
+  </ion-item>
+ 
+<ion-item >
+    <span item-left ><ion-icon name="bicycle"></ion-icon> {{ stations[0].bikes }}</span>
+    <span item-left ><ion-icon name="flag"></ion-icon> {{stations[0].attachs}}</span>
+    <span item-left *ngIf="stations[0].pay == 1"><ion-icon name="card"></ion-icon></span>
+    
+    <button ion-button icon-left clear item-right>
+      <ion-icon name="navigate"></ion-icon>
+      Start
+    </button>
+  </ion-item>
+
+</ion-card>
 </ion-content>

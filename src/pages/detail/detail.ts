@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { OnInit } from '@angular/core';
 
 import { NavController , NavParams } from 'ionic-angular';
@@ -15,7 +14,7 @@ import {StationService} from '../home/station.service';
 export class DetailPage{
 
 	id:number;
-	 stations : Station[] ;
+	stations:Station[];
 
   constructor( navParams : NavParams, public stationService : StationService ) {
 	this.id = navParams.get("id");
@@ -30,9 +29,7 @@ export class DetailPage{
 
   //get DATA
   getStationById( id:number ): void {
-    this.stationService.getStationById(id).then(stations => 
-      this.stations = stations 
-      ); 
+    this.stationService.getStationById(id).then(stations => this.stations = stations ); 
   }
 
 }

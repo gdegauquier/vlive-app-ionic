@@ -7,5 +7,8 @@ export class Station{
   public bikes :number;
   public attachs : number;
   public pay : number;
+  public latitude:number;
+  public longitude:number;	
+  public picture_url:string;
 
 }

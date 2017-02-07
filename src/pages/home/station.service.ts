@@ -31,6 +31,7 @@ constructor(private http: Http) {}
 
   getStationById( stationId:number ){
 
+console.log(STATION_URL + stationId);
     return this.http.get(STATION_URL + stationId)
       .map(res => res.json())
       .toPromise();
