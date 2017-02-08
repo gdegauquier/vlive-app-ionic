@@ -1,53 +1,50 @@
+https://www.joshmorony.com/ionic-2-how-to-use-google-maps-geolocation-video-tutorial/
 <ion-header>
-  <ion-toolbar>
-    <ion-row *ngIf="!search">
-
-    <!-- STEP 1 -->
-      <ion-col  width-80>
-        <ion-title>Stations</ion-title>
-      </ion-col>
-      <ion-col width-20>
-        <button ion-button clear icon-only (click)="setSearch()" >
-          <ion-icon color="dark" name="search" ></ion-icon>
-        </button>
-      </ion-col>
-  </ion-row>
-
-    <!-- STEP 2 -->
-     <ion-row *ngIf="search">
-      <ion-col  width-20>
-        <button ion-button clear icon-only (click)="setSearch()" >
-          <ion-icon color="dark" name="arrow-back" ></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col width-80>
-        <ion-input id="searchInput" #box (keyup)="onKey( box.value )"  type="text" placeholder="Recherche..." value=""  ></ion-input>
-      </ion-col>
-    </ion-row>
+  <ion-toolbar *ngIf="!search">
+    <ion-title>Stations</ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only  (click)="setSearch()">
+        <ion-icon color="dark" name="search" ></ion-icon>
+      </button>
+      <button ion-button clear icon-only  (click)="setSearch()">
+        <ion-icon color="dark" name="more" ></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
+
+  <ion-searchbar *ngIf="search">
+  </ion-searchbar>
+
+  <!-- STEP 2 -->
+<!--  <ion-toolbar *ngIf="search">
+    <ion-title><ion-icon color="dark" name="arrow-back" (click)="setSearch()"></ion-icon></ion-title>
+<ion-buttons end>
+  <ion-input id="searchInput" #box (keyup)="onKey( box.value )"  type="text" placeholder="Recherche..." value=""  ></ion-input>
+    </ion-buttons>
+  </ion-toolbar> -->
+
 </ion-header>
 
 <ion-content class="list-avatar-page">
 
   <ion-list>
 
-  <ion-item *ngFor="let station of stations" (click)="switchTabs( station.id )">
+    <ion-item *ngFor="let station of stations" (click)="switchTabs( station.id )">
       <ion-avatar item-left>
         <img src="assets/img/map.png">
       </ion-avatar>
       <h2>{{station.name}}</h2>
       <p>{{station.town_name}}</p>
       <ion-note item-right><ion-icon name="bicycle"></ion-icon> {{station.bikes}}  • <ion-icon name="flag"></ion-icon> {{station.attachs}}
-      
-      <span *ngIf="station.pay == 1">
-      • <ion-icon name="card"></ion-icon>
-      </span>
+
+        <span *ngIf="station.pay == 1">
+          • <ion-icon name="card"></ion-icon>
+        </span>
       </ion-note>
 
     </ion-item>
 
 
-     </ion-list>
+  </ion-list>
 
 </ion-content>
-

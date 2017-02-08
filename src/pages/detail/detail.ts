@@ -12,32 +12,32 @@ import {StationService} from '../home/station.service';
 })
 export class DetailPage{
 
-	_options;
-	id:number;
-	stations:Station[];
-	@ViewChild('mySlider') mySlider: any;
+  _options;
+  id:number;
+  stations:Station[];
+  @ViewChild('mySlider') mySlider: any;
 
   constructor( navParams : NavParams, public stationService : StationService ) {
-	this.id = navParams.get("id");
+    this.id = navParams.get("id");
 
-	this._options = {
-	    slidesPerView:1,
-	    pager: true,
-	    onInit:()=>{}
-	}
+    this._options = {
+      slidesPerView:1,
+      pager: true,
+      onInit:()=>{}
+    }
 
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-      this.getStationById( this.id );
-      console.log("id "+this.id)
+    this.getStationById( this.id );
+    console.log("id "+this.id)
 
   }
 
   //get DATA
   getStationById( id:number ): void {
-    this.stationService.getStationById(id).then(stations => this.stations = stations ); 
+    this.stationService.getStationById(id).then(stations => this.stations = stations );
   }
 
 }
