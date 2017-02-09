@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {EventEmitter} from "@angular/common/src/facade/async";
+import { PopoverController } from 'ionic-angular';
 
 import { OnInit } from '@angular/core';
 
@@ -9,7 +10,8 @@ import { NavController, LoadingController } from 'ionic-angular';
 import {Station} from './station';
 import {StationService} from './station.service';
 
-import {DetailPage} from '../detail/detail'
+import {DetailPage} from '../detail/detail';
+import {PopoverPage} from './popover.page';
 
 
 
@@ -18,7 +20,7 @@ import {DetailPage} from '../detail/detail'
   selector: 'page-home',
   templateUrl: 'home.html',
   providers: [StationService],
-  entryComponents: [DetailPage]
+  entryComponents: [DetailPage, PopoverPage]
 })
 export class HomePage {
 
@@ -28,53 +30,67 @@ export class HomePage {
   numbers = [];
   query: string = '';
   search:boolean = false;
-  public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
-  navCtrl ;
+  searchInput = "";
 
 
-  constructor(navCtrl: NavController, 
-              public stationService : StationService, public loadingCtrl: LoadingController) {
+  constructor( public navCtrl: NavController,
+              public stationService : StationService,
+              public loadingCtrl: LoadingController,              public popoverCtrl: PopoverController
+            ) {
      this.navCtrl = navCtrl;
-
-     // Create the popup
-    this.loading = this.loadingCtrl.create({
-      content: 'Loading data...'
-    });
 
   }
 
-  
   ngOnInit(): void {
-
       this.getStations();
+  }
 
+//menu popup (refresh)
+  presentPopover(myEvent) {
+      let popover = this.popoverCtrl.create(PopoverPage);
+      popover.present({
+        ev: myEvent
+      });
+    }
+
+
+//search
+  onInput($event){
+    this.query = this.searchInput;
+    this.filterItems( this.searchInput );
+  }
+
+  onCancel($event){
+    this.search = false;
+    this.query ='';
+    this.filterItems( this.query );
   }
 
 
   //keyboard
-  onKey(value: string) {
+  /*onKey(value: string) {
     this.query = value ;
     this.filterItems( value );
     //console.log(this.stations);
-  }
+  }*/
 
   //get DATA
   getStations(): void {
 
-    this.loading.present(); 
-    
-    this.stationService.getStations().then(stations => 
-      this.stations = stations 
-      ); 
+  //  this.loading.present();
 
-    this.loading.dismiss();
+    this.stationService.getStations().then(stations =>
+      this.stations = stations
+      );
+
+  //  this.loading.dismiss();
   }
 
   filterItems( query:string ) {
-      console.log("query : "+query);
+      //console.log("query : "+query);
 
     if ( query != null && query.length > 0 ){
-        
+
       if ( this.stationsAll == null || this.stationsAll.length == 0){
             this.stationsAll = this.stations;
       }
@@ -83,8 +99,8 @@ export class HomePage {
 
         this.stations = [];
         for (let row of this.stationsAll) {
-          
-            if ( row.name.toLowerCase().indexOf(   query   ) > -1 || 
+
+            if ( row.name.toLowerCase().indexOf(   query   ) > -1 ||
                  row.town_name.toLowerCase().indexOf(   query   ) > -1
               ){
               //console.log("OK ! " + row.name);
@@ -96,16 +112,17 @@ export class HomePage {
         return ;
     }
     this.getStations();
-  
+
   }
 
   setSearch(){
 
       this.search = !this.search;
 
+
       if ( ! this.search){
         this.filterItems('');
-      }  
+      }
 
   }
 

@@ -6,13 +6,17 @@ https://www.joshmorony.com/ionic-2-how-to-use-google-maps-geolocation-video-tuto
       <button ion-button clear icon-only  (click)="setSearch()">
         <ion-icon color="dark" name="search" ></ion-icon>
       </button>
-      <button ion-button clear icon-only  (click)="setSearch()">
+      <button ion-button clear icon-only  (click)="presentPopover($event)">
         <ion-icon color="dark" name="more" ></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-searchbar *ngIf="search">
+  <ion-searchbar *ngIf="search"
+  [(ngModel)]="searchInput"
+  (ionInput)="onInput($event)"
+  (ionCancel)="onCancel($event)"
+  [showCancelButton]="true" >
   </ion-searchbar>
 
   <!-- STEP 2 -->

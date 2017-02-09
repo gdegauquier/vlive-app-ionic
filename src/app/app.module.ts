@@ -7,11 +7,11 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { DetailPage } from '../pages/detail/detail';
+import { PopoverPage } from '../pages/home/popover.page';
 
 import { StationService }  from '../pages/home/station.service';
-import {StationFilterPipe} from '../pages/home/station-filter.pipe';
 
-import {FocusDirective} from '../pages/home/focus.directive';
+
 
 @NgModule({
   declarations: [
@@ -19,10 +19,9 @@ import {FocusDirective} from '../pages/home/focus.directive';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage, 
-    StationFilterPipe,
-    FocusDirective,
-    DetailPage
+    TabsPage,
+    DetailPage,
+    PopoverPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -34,11 +33,12 @@ import {FocusDirective} from '../pages/home/focus.directive';
     ContactPage,
     HomePage,
     TabsPage,
-    DetailPage
+    DetailPage,
+    PopoverPage
   ],
-  providers: 
+  providers:
   [
-    {provide: ErrorHandler, useClass: IonicErrorHandler}, 
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
     StationService
   ]
 })
