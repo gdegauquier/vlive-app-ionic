@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 
 @Component({
   template:
@@ -13,15 +13,24 @@ import { ViewController } from 'ionic-angular';
     `
 })
 export class PopoverPage {
-  constructor(public viewCtrl: ViewController) {}
+
+callback = null ;
+viewCtrlP:ViewController = null ;
+
+  constructor(private viewCtrl: ViewController, private params: NavParams) {
+    this.viewCtrlP = viewCtrl ;
+    this.callback = this.params.get('refreshParent');
+
+  }
 
   close() {
-    this.viewCtrl.dismiss();
+    this.viewCtrlP.dismiss();
   }
 
   refresh(){
     location.reload();
-    close();
+    this.close();
+
   }
 
 

@@ -1,9 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title *ngIf="stations">
-
-  {{stations[0].id}} - {{stations[0].name}}
-
+      {{stations[0].name}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -11,48 +9,79 @@
 <ion-content>
 <ion-card *ngIf="stations">
 
-
 		<ion-slides [options]="_options" #mySlider>
-    
+
+      <ion-slide>
+        <img src="http://maps.googleapis.com/maps/api/streetview?size=640x390&location={{stations[0].latitude}},{{stations[0].longitude}}&fov=120&heading=235&pitch=10&sensor=false;">
+       </ion-slide>
+
     <ion-slide>
-      <img src="https://maps.googleapis.com/maps/api/staticmap?center={{stations[0].latitude}},{{stations[0].longitude}}	&zoom=16&size=640x480%20&maptype=roadmap&markers=color:red|{{stations[0].latitude}},{{stations[0].longitude}}">
+      <img src="https://maps.googleapis.com/maps/api/staticmap?center={{stations[0].latitude}},{{stations[0].longitude}}	&zoom=19&size=640x390&maptype=roadmap&markers=color:red|{{stations[0].latitude}},{{stations[0].longitude}}">
      </ion-slide>
 
-
-    <ion-slide>
-      <img src="http://maps.googleapis.com/maps/api/streetview?size=640x480&location={{stations[0].latitude}},{{stations[0].longitude}}&fov=120&heading=235&pitch=10&sensor=false;">
-     </ion-slide>
-
-    <ion-slide>
+  <!--  <ion-slide>
       <img src="https://maps.googleapis.com/maps/api/staticmap?center={{stations[0].latitude}},{{stations[0].longitude}}	&zoom=16&size=640x480%20&maptype=satellite&markers=color:red|{{stations[0].latitude}},{{stations[0].longitude}}">
-     </ion-slide>
- 
+    </ion-slide> -->
+
 </ion-slides>
 
+<ion-card-content >
 
-<ion-item >
-    <ion-icon name="locate" item-left large></ion-icon>
-    <h2>{{stations[0].id}} - {{stations[0].name}}</h2>
-    <p>{{stations[0].address}}</p>
-     <p>{{stations[0].town_name}}</p>
-  </ion-item>
- 
-<ion-item >
-    <span item-left ><ion-icon name="bicycle"></ion-icon> {{ stations[0].bikes }}</span>
-    <span item-left ><ion-icon name="flag"></ion-icon> {{stations[0].attachs}}</span>
-    <span item-left *ngIf="stations[0].pay == 1"><ion-icon name="card"></ion-icon></span>
+                <h2>
+                <b>{{stations[0].id}} - {{stations[0].name}}</b>
+                </h2>
 
-    <button ion-button icon-left clear item-right>
-      <ion-icon name="locate"></ion-icon>
-      Show
-    </button>
-    
-    <button ion-button icon-left clear item-right>
-      <ion-icon name="navigate"></ion-icon>
-      Start
-    </button>
+                <p>{{stations[0].address}}</p>
+                <p>{{stations[0].town_name}}</p>
 
-  </ion-item>
+</ion-card-content>
+
+
+
+
+<ion-list  *ngIf="stations">
+    <ion-item style="border-bottom: 1px solid #dedede; border-top: 1px solid #dedede;" >
+        <ion-icon item-left name="bicycle"></ion-icon>
+        <h3>Vélos</h3>
+        <ion-note item-right>{{ stations[0].bikes }}</ion-note>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #dedede;">
+        <ion-icon item-left name="flag"></ion-icon>
+        <h3>Places libres</h3>
+        <ion-note item-right>{{ stations[0].attachs }}</ion-note>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #dedede;">
+        <ion-icon item-left name="card"></ion-icon>
+        <h3>Borne de paiement</h3>
+        <ion-note item-right *ngIf="stations[0].pay == 1"> Oui </ion-note>
+        <ion-note item-right *ngIf="stations[0].pay != 1"> Non </ion-note>
+    </ion-item>
+
+</ion-list>
+
+
+    <ion-row no-padding>
+        <ion-col>
+            <button ion-button clear small >
+                <ion-icon name="locate" style="padding-right:5px;"></ion-icon> Carte
+            </button>
+        </ion-col>
+        <ion-col text-center>
+            <button ion-button clear small >
+                <ion-icon name="navigate" style="padding-right:5px;"></ion-icon> Itinéraire
+            </button>
+        </ion-col>
+
+    </ion-row>
+
+
+
 
 </ion-card>
+
+
+
+
 </ion-content>

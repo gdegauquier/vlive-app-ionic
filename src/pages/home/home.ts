@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import {EventEmitter} from "@angular/common/src/facade/async";
+
 import { PopoverController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import { OnInit } from '@angular/core';
 
 
-import { NavController, LoadingController } from 'ionic-angular';
+
 
 import {Station} from './station';
 import {StationService} from './station.service';
@@ -24,7 +26,7 @@ import {PopoverPage} from './popover.page';
 })
 export class HomePage {
 
-  public loading ;
+  loader ;
   stations : Station[] ;
   stationsAll : Station[];
   numbers = [];
@@ -33,25 +35,51 @@ export class HomePage {
   searchInput = "";
 
 
+
   constructor( public navCtrl: NavController,
-              public stationService : StationService,
-              public loadingCtrl: LoadingController,              public popoverCtrl: PopoverController
+               public stationService : StationService,
+               public loadingCtrl: LoadingController,
+               public popoverCtrl: PopoverController,
+               public toastCtrl: ToastController
             ) {
      this.navCtrl = navCtrl;
+     this.loader = loadingCtrl.create();
 
   }
 
   ngOnInit(): void {
+
+
+
       this.getStations();
   }
 
+//in case of API error
+  presentToast() {
+     let toast = this.toastCtrl.create({
+       message: 'Erreur survenue. Veuillez rafraîchir la page.',
+       duration: 3000
+     });
+     toast.present();
+   }
+
 //menu popup (refresh)
   presentPopover(myEvent) {
-      let popover = this.popoverCtrl.create(PopoverPage);
+
+     var a = this;
+
+      let popover = this.popoverCtrl.create(PopoverPage,
+        { refreshParent: function(){
+                          a.getStations();
+                        }
+        });
       popover.present({
         ev: myEvent
       });
     }
+
+
+
 
 
 //search
@@ -66,47 +94,62 @@ export class HomePage {
     this.filterItems( this.query );
   }
 
-
-  //keyboard
-  /*onKey(value: string) {
-    this.query = value ;
-    this.filterItems( value );
-    //console.log(this.stations);
-  }*/
-
   //get DATA
   getStations(): void {
 
-  //  this.loading.present();
+    var a = this;
+    this.stationsAll = [];
 
-    this.stationService.getStations().then(stations =>
-      this.stations = stations
-      );
+    this.loader.present() ;
+  /*function(){
+         console.log("status API OK.");
 
-  //  this.loading.dismiss();
+         a.loader.dismiss();
+      })*/
+
+console.log("Avant API OK.");
+
+          a.stationService.getStations()
+            .then( (data) => {
+                this.stations = data;
+                this.loader.dismiss();
+                console.log("Apres API OK.")
+             }
+           )
+          .catch( () => {
+              this.loader.dismiss();
+              this.presentToast();
+              console.log("Apres API KO.")
+            }
+          );
+
   }
 
-  filterItems( query:string ) {
-      //console.log("query : "+query);
+  filterItems( _query:string ) {
 
-    if ( query != null && query.length > 0 ){
+    //query ?
+    if ( _query != null && _query.length > 0 ){
 
+    // svg des datas
       if ( this.stationsAll == null || this.stationsAll.length == 0){
             this.stationsAll = this.stations;
       }
 
-        query = query.toLowerCase();
+        _query = _query.toLowerCase();
 
         this.stations = [];
-        for (let row of this.stationsAll) {
 
-            if ( row.name.toLowerCase().indexOf(   query   ) > -1 ||
-                 row.town_name.toLowerCase().indexOf(   query   ) > -1
-              ){
-              //console.log("OK ! " + row.name);
-              this.stations.push( row );
+        if ( this.stationsAll != null && this.stationsAll.length != 0){
+            for (let row of this.stationsAll) {
+
+                if ( row.name.toLowerCase().indexOf(   _query   ) > -1 ||
+                     row.town_name.toLowerCase().indexOf(   _query   ) > -1
+                  ){
+                  //console.log("OK ! " + row.name);
+                  this.stations.push( row );
+                }
+
             }
-
         }
 
         return ;
@@ -119,7 +162,6 @@ export class HomePage {
 
       this.search = !this.search;
 
-
       if ( ! this.search){
         this.filterItems('');
       }
@@ -130,6 +172,29 @@ export class HomePage {
   switchTabs( stationId:number ){
       console.log(stationId);
       this.navCtrl.push(DetailPage, { id : stationId } );
+
+      var a = this;
+
+      a.stationService.getStationByIdAndUpdateTable( stationId , a.stations )
+      .then(
+
+        function(valeur) {
+
+          for (let station of a.stations) {
+            if (  station.id == stationId   ){
+              station.bikes = valeur[0].bikes;
+              station.attachs = valeur[0].attachs;
+            }
+          }
+
+          }
+
+      );
+
+  }
+
+  test(){
+    console.log("test");
   }
 
 
