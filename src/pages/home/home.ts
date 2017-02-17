@@ -36,6 +36,7 @@ export class HomePage {
 
 
 
+
   constructor( public navCtrl: NavController,
                public stationService : StationService,
                public loadingCtrl: LoadingController,
@@ -78,8 +79,22 @@ export class HomePage {
       });
     }
 
+    presentLoader(){
+      try{
+        this.loader = this.loadingCtrl.create();
+        this.loader.present() ;
+      }catch(e){
+            console.log( "present : KO");
+      }
+    }
 
-
+    dismissLoader(){
+        try{
+      this.loader.dismiss();
+    }catch(e){
+      console.log( "dismiss : KO");
+    }
+    }
 
 
 //search
@@ -89,9 +104,11 @@ export class HomePage {
   }
 
   onCancel($event){
-    this.search = false;
-    this.query ='';
-    this.filterItems( this.query );
+
+      this.search = false;
+      this.query ='';
+      this.filterItems( this.query );
+
   }
 
   //get DATA
@@ -100,24 +117,19 @@ export class HomePage {
     var a = this;
     this.stationsAll = [];
 
-    this.loader.present() ;
-  /*function(){
-         console.log("status API OK.");
-
-         a.loader.dismiss();
-      })*/
+    this.presentLoader();
 
 console.log("Avant API OK.");
 
           a.stationService.getStations()
             .then( (data) => {
                 this.stations = data;
-                this.loader.dismiss();
+                this.dismissLoader();
                 console.log("Apres API OK.")
              }
            )
           .catch( () => {
-              this.loader.dismiss();
+              this.dismissLoader();
               this.presentToast();
               console.log("Apres API KO.")
             }
@@ -170,25 +182,26 @@ console.log("Avant API OK.");
 
 
   switchTabs( stationId:number ){
-      console.log(stationId);
-      this.navCtrl.push(DetailPage, { id : stationId } );
+     console.log(stationId);
+    // this.presentLoader();
 
-      var a = this;
 
-      a.stationService.getStationByIdAndUpdateTable( stationId , a.stations )
-      .then(
 
-        function(valeur) {
-
-          for (let station of a.stations) {
-            if (  station.id == stationId   ){
-              station.bikes = valeur[0].bikes;
-              station.attachs = valeur[0].attachs;
-            }
-          }
-
-          }
-
+      this.stationService.getStationByIdAndUpdateTable( stationId , this.stations )
+      .then(  (data) => {
+              for (let station of this.stations) {
+                if (  station.id == stationId   ){
+                  station.bikes = data[0].bikes;
+                  station.attachs = data[0].attachs;
+                }
+              }
+          this.navCtrl.push(DetailPage, { id : stationId } );
+        //  this.dismissLoader();
+      })
+      .catch( () => {
+                    //  this.dismissLoader();
+                    this.presentToast();
+                    }
       );
 
   }

@@ -42,6 +42,24 @@ export class DetailPage{
 
   }
 
+  presentLoader(){
+    try{
+      this.loader = this.loadingCtrl.create();
+      this.loader.present() ;
+    }catch(e){
+          console.log( "present : KO");
+    }
+  }
+
+  dismissLoader(){
+      try{
+    this.loader.dismiss();
+  }catch(e){
+    console.log( "dismiss : KO");
+  }
+  }
+
+
   //in case of API error
     presentToast() {
        let toast = this.toastCtrl.create({
@@ -54,19 +72,19 @@ export class DetailPage{
   //get DATA
   getStationById( id:number ): void {
 
-      this.loader.present() ;
+      this.presentLoader();
 
     this.stationService.getStationById(id).then(
       //stations => this.stations = stations
 
       (data) => {
           this.stations = data;
-          this.loader.dismiss();
+          this.dismissLoader();
           console.log("Apres API OK.")
        }
      )
     .catch( () => {
-        this.loader.dismiss();
+        this.presentLoader();
         this.presentToast();
         console.log("Apres API KO.")
       }
