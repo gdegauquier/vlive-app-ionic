@@ -50,8 +50,6 @@ export class HomePage {
 
   ngOnInit(): void {
 
-
-
       this.getStations();
   }
 
