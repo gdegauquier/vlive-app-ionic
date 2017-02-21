@@ -3,6 +3,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController , NavParams, LoadingController, ToastController } from 'ionic-angular';
 
 import {Station} from '../home/station';
+import {MapPage} from '../map/map';
 import {StationService} from '../home/station.service';
 
 //http://coenraets.org/blog/2016/01/ionicrealty-new-ionic-2-sample-application/
@@ -23,7 +24,8 @@ export class DetailPage{
   constructor( public navParams : NavParams,
                public stationService : StationService,
                public loadingCtrl: LoadingController,
-               public toastCtrl: ToastController ) {
+               public toastCtrl: ToastController, 
+               public nav:NavController ) {
     this.id = navParams.get("id");
     this.loader = loadingCtrl.create();
 
@@ -90,6 +92,13 @@ export class DetailPage{
       }
 
     );
+  }
+
+  switchTabMap( station : Station ) : void{
+
+      //this.nav.push(Other,{currentStation: station});
+      this.nav.parent.select(1);
+
   }
 
 }

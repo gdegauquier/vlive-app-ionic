@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import {StationService} from '../home/station.service';
+import {Station} from '../home/station';
 
 declare var google;
 
@@ -9,16 +10,21 @@ declare var google;
 
 
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html',
+  selector: 'page-map',
+  templateUrl: 'map.html',
   providers: [StationService]
 })
-export class AboutPage {
+export class MapPage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  currentStation:Station;
 
-  constructor(public navCtrl: NavController, public stationService : StationService,) {
+  constructor(public navCtrl: NavController, public stationService : StationService, public params:NavParams) {
+    
+    if ( params.get("currentStation") != null ){
+      this.currentStation   = params.get("currentStation");
+    }
 
   }
 
@@ -61,6 +67,16 @@ export class AboutPage {
   loadMap() : void{
 
     //default -- station 25 which is LILLE FLANDRES
+
+    let lat:number = 50.63600;
+    let lng:number = 3.06968;
+
+    if ( this.currentStation != null ){
+      lat = this.currentStation.latitude;
+      lng = this.currentStation.longitude;
+      console.log( "coordonnees prises via station "+this.currentStation.id + ","+this.currentStation.name );
+    }
+
     let latLng = new google.maps.LatLng(50.63600, 3.06968);
 
     let mapOptions = {
@@ -77,23 +93,12 @@ export class AboutPage {
 
   addMarker() : void{
 
-
-
-    //  this.presentLoader();
-
   console.log("Avant API OK.");
 
             this.stationService.getStations()
               .then( (data) => {
 
                   for (let row of data) {
-
-                      /*if ( row.name.toLowerCase().indexOf(   _query   ) > -1 ||
-                           row.town_name.toLowerCase().indexOf(   _query   ) > -1
-                        ){
-                        //console.log("OK ! " + row.name);
-                        this.stations.push( row );
-                      }*/
 
                      if (   row.latitude != 0 && row.longitude != 0    ){
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { HomePage } from '../home/home';
-import { AboutPage } from '../about/about';
+import { MapPage } from '../map/map';
 import { ContactPage } from '../contact/contact';
 
 @Component({
@@ -10,11 +10,12 @@ import { ContactPage } from '../contact/contact';
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
+
+
   tab1Root: any = HomePage;
-  tab2Root: any = AboutPage;
+  tab2Root: any = MapPage;
   tab3Root: any = ContactPage;
 
-  constructor() {
+ // https://ionicallyspeaking.com/2016/03/10/global-variables-in-ionic-2/
 
-  }
 }
