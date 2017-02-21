@@ -12,7 +12,9 @@
   <meta name="theme-color" content="#4e8ef7">
 
   <!-- cordova.js required for cordova apps -->
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
   <script src="cordova.js"></script>
+  
 
   <!-- un-comment this code to enable service worker
   <script>
@@ -25,8 +27,6 @@
 
   <link href="build/main.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 </head>
 <body>
@@ -35,31 +35,10 @@
   <ion-app></ion-app>
 
   <!-- The polyfills js is generated during the build process -->
-
   <script src="build/polyfills.js"></script>
 
   <!-- The bundle js is generated during the build process -->
   <script src="build/main.js"></script>
-
-  <script>
-
-    $(function() {
-
-      var $myDiv = $('#mapid');
-
-        if ( $myDiv.length){
-
-          var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-
-
-        }
-
-        console.log("hello");
-
-    });
-
-  </script>
-
 
 </body>
 </html>

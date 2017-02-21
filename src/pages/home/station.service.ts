@@ -6,8 +6,8 @@ import {Station} from './station';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-const BASE_URL    = "http://localhost/vlive-api/index.php/api/v1/refresh";
-const STATION_URL = "http://localhost/vlive-api/index.php/api/v1/stations/";
+const BASE_URL    = "http://78.222.104.95:8888/vlive-api/index.php/api/v1/refresh";
+const STATION_URL = "http://78.222.104.95:8888/vlive-api/index.php/api/v1/stations/";
 
 const HEADER = { headers: new Headers({ 'Content-Type': 'application/json' }) };
 

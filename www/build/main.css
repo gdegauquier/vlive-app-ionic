@@ -21275,3 +21275,12 @@ sub {
     padding-top: calc(16px + 20px);
   }
 }
+
+page-about .scroll-content {
+  height: 100%;
+}
+
+page-about #map {
+  width: 100%;
+  height: calc( 100% - 75px);
+}
