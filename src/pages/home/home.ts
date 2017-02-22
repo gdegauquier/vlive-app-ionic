@@ -19,194 +19,193 @@ import {PopoverPage} from './popover.page';
 
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
-  providers: [StationService],
-  entryComponents: [DetailPage, PopoverPage]
+selector: 'page-home',
+templateUrl: 'home.html',
+providers: [StationService],
+entryComponents: [DetailPage, PopoverPage]
 })
 export class HomePage {
 
-  loader ;
-  stations : Station[] ;
-  stationsAll : Station[];
-  numbers = [];
-  query: string = '';
-  search:boolean = false;
-  searchInput = "";
+loader ;
+stations : Station[] ;
+stationsAll : Station[];
+numbers = [];
+query: string = '';
+search:boolean = false;
+searchInput = "";
 
 
 
 
-  constructor( public navCtrl: NavController,
-               public stationService : StationService,
-               public loadingCtrl: LoadingController,
-               public popoverCtrl: PopoverController,
-               public toastCtrl: ToastController
-            ) {
-     this.navCtrl = navCtrl;
-     this.loader = loadingCtrl.create();
+constructor( public navCtrl: NavController,
+public stationService : StationService,
+public loadingCtrl: LoadingController,
+public popoverCtrl: PopoverController,
+public toastCtrl: ToastController
+) {
+  this.navCtrl = navCtrl;
+  this.loader = loadingCtrl.create();
+}
 
-  }
+ngOnInit(): void {
 
-  ngOnInit(): void {
-
-      this.getStations();
-  }
+this.getStations();
+}
 
 //in case of API error
-  presentToast() {
-     let toast = this.toastCtrl.create({
-       message: 'Erreur survenue. Veuillez rafraîchir la page.',
-       duration: 3000
-     });
-     toast.present();
-   }
+presentToast() {
+let toast = this.toastCtrl.create({
+message: 'Erreur survenue. Veuillez rafraîchir la page.',
+duration: 3000
+});
+toast.present();
+}
 
 //menu popup (refresh)
-  presentPopover(myEvent) {
+presentPopover(myEvent) {
 
-     var a = this;
+var a = this;
 
-      let popover = this.popoverCtrl.create(PopoverPage,
-        { refreshParent: function(){
-                          a.getStations();
-                        }
-        });
-      popover.present({
-        ev: myEvent
-      });
-    }
+let popover = this.popoverCtrl.create(PopoverPage,
+{ refreshParent: function(){
+a.getStations();
+}
+});
+popover.present({
+ev: myEvent
+});
+}
 
-    presentLoader(){
-      try{
-        this.loader = this.loadingCtrl.create();
-        this.loader.present() ;
-      }catch(e){
-            console.log( "present : KO");
-      }
-    }
+presentLoader(){
+try{
+this.loader = this.loadingCtrl.create();
+this.loader.present() ;
+}catch(e){
+console.log( "present : KO");
+}
+}
 
-    dismissLoader(){
-        try{
-      this.loader.dismiss();
-    }catch(e){
-      console.log( "dismiss : KO");
-    }
-    }
+dismissLoader(){
+try{
+this.loader.dismiss();
+}catch(e){
+console.log( "dismiss : KO");
+}
+}
 
 
 //search
-  onInput($event){
-    this.query = this.searchInput;
-    this.filterItems( this.searchInput );
-  }
+onInput($event){
+this.query = this.searchInput;
+this.filterItems( this.searchInput );
+}
 
-  onCancel($event){
+onCancel($event){
 
-      this.search = false;
-      this.query ='';
-      this.filterItems( this.query );
+this.search = false;
+this.query ='';
+this.filterItems( this.query );
 
-  }
+}
 
-  //get DATA
-  getStations(): void {
+//get DATA
+getStations(): void {
 
-    var a = this;
-    this.stationsAll = [];
+var a = this;
+this.stationsAll = [];
 
-    this.presentLoader();
+this.presentLoader();
 
 console.log("Avant API OK.");
 
-          a.stationService.getStations()
-            .then( (data) => {
-                this.stations = data;
-                this.dismissLoader();
-                console.log("Apres API OK.")
-             }
-           )
-          .catch( () => {
-              this.dismissLoader();
-              this.presentToast();
-              console.log("Apres API KO.")
-            }
-          );
+a.stationService.getStations()
+.then( (data) => {
+this.stations = data;
+this.dismissLoader();
+console.log("Apres API OK.")
+}
+)
+.catch( () => {
+this.dismissLoader();
+this.presentToast();
+console.log("Apres API KO.")
+}
+);
 
-  }
+}
 
-  filterItems( _query:string ) {
+filterItems( _query:string ) {
 
-    //query ?
-    if ( _query != null && _query.length > 0 ){
+//query ?
+if ( _query != null && _query.length > 0 ){
 
-    // svg des datas
-      if ( this.stationsAll == null || this.stationsAll.length == 0){
-            this.stationsAll = this.stations;
-      }
+// svg des datas
+if ( this.stationsAll == null || this.stationsAll.length == 0){
+this.stationsAll = this.stations;
+}
 
-        _query = _query.toLowerCase();
+_query = _query.toLowerCase();
 
-        this.stations = [];
+this.stations = [];
 
-        if ( this.stationsAll != null && this.stationsAll.length != 0){
-            for (let row of this.stationsAll) {
+if ( this.stationsAll != null && this.stationsAll.length != 0){
+for (let row of this.stationsAll) {
 
-                if ( row.name.toLowerCase().indexOf(   _query   ) > -1 ||
-                     row.town_name.toLowerCase().indexOf(   _query   ) > -1
-                  ){
-                  //console.log("OK ! " + row.name);
-                  this.stations.push( row );
-                }
+if ( row.name.toLowerCase().indexOf(   _query   ) > -1 ||
+row.town_name.toLowerCase().indexOf(   _query   ) > -1
+){
+//console.log("OK ! " + row.name);
+this.stations.push( row );
+}
 
-            }
-        }
+}
+}
 
-        return ;
-    }
-    this.getStations();
+return ;
+}
+this.getStations();
 
-  }
+}
 
-  setSearch(){
+setSearch(){
 
-      this.search = !this.search;
+this.search = !this.search;
 
-      if ( ! this.search){
-        this.filterItems('');
-      }
+if ( ! this.search){
+this.filterItems('');
+}
 
-  }
-
-
-  switchTabs( stationId:number ){
-     console.log(stationId);
-    // this.presentLoader();
+}
 
 
+switchTabs( stationId:number ){
+console.log(stationId);
+// this.presentLoader();
 
-      this.stationService.getStationByIdAndUpdateTable( stationId , this.stations )
-      .then(  (data) => {
-              for (let station of this.stations) {
-                if (  station.id == stationId   ){
-                  station.bikes = data[0].bikes;
-                  station.attachs = data[0].attachs;
-                }
-              }
-          this.navCtrl.push(DetailPage, { id : stationId } );
-        //  this.dismissLoader();
-      })
-      .catch( () => {
-                    //  this.dismissLoader();
-                    this.presentToast();
-                    }
-      );
 
-  }
 
-  test(){
-    console.log("test");
-  }
+this.stationService.getStationByIdAndUpdateTable( stationId , this.stations )
+.then(  (data) => {
+for (let station of this.stations) {
+if (  station.id == stationId   ){
+station.bikes = data[0].bikes;
+station.attachs = data[0].attachs;
+}
+}
+this.navCtrl.push(DetailPage, { id : stationId } );
+//  this.dismissLoader();
+})
+.catch( () => {
+//  this.dismissLoader();
+this.presentToast();
+}
+);
+
+}
+
+test(){
+console.log("test");
+}
 
 
 

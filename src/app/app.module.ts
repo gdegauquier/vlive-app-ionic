@@ -10,6 +10,7 @@ import { DetailPage } from '../pages/detail/detail';
 import { PopoverPage } from '../pages/home/popover.page';
 
 import { StationService }  from '../pages/home/station.service';
+import { GlobalVars }  from '../providers/globalvars.service';
 
 
 
@@ -22,11 +23,10 @@ import { StationService }  from '../pages/home/station.service';
     TabsPage,
     DetailPage,
     PopoverPage
-  ],
+    ],
   imports: [
     IonicModule.forRoot(MyApp)
   ],
-  bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     MapPage,
@@ -39,7 +39,8 @@ import { StationService }  from '../pages/home/station.service';
   providers:
   [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StationService
-  ]
+    StationService, GlobalVars
+  ],
+  bootstrap: [IonicApp]
 })
 export class AppModule {}
