@@ -1,9 +1,8 @@
-import { Component, ViewChild, ElementRef, OnInit, OnChanges, SimpleChanges  } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, EventEmitter   } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import {StationService} from '../home/station.service';
 import {GlobalVars} from '../../providers/globalvars.service';
-
 import {Station} from '../home/station';
 
 declare var google;
@@ -17,28 +16,37 @@ declare var google;
   templateUrl: 'map.html',
   providers: [StationService, GlobalVars]
 })
-export class MapPage implements OnChanges {
+export class MapPage  {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   stationIdToCenter : number = 25; // which is LILLE FLANDRES
 
   constructor(public navCtrl: NavController, public stationService : StationService, public globalVars : GlobalVars,  public params:NavParams) {
-    if (  globalVars.getStationIdToCenter() !== null  ){
-      this.stationIdToCenter = globalVars.getStationIdToCenter();
-    }
+    
   }
 
   //http://codepen.io/anon/pen/xGJyYx
   //https://www.joshmorony.com/ionic-2-how-to-use-google-maps-geolocation-video-tutorial/
 
   ngOnInit(): void {
+
+    if (  this.globalVars.getStationIdToCenter() !== null  ){
+      this.stationIdToCenter = this.globalVars.getStationIdToCenter(); 
+    }
+
     this.loadMap();
+
+    this.globalVars.tabChanged.subscribe(
+      (value) => {
+        this.stationIdToCenter = value;
+        this.loadMap();
+      }
+    );
+
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-      this.loadMap();
-  }
+
 
   loadMap() : void{
 
