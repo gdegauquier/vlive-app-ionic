@@ -6,9 +6,9 @@
       <button ion-button clear icon-only  (click)="setSearch()">
         <ion-icon color="dark" name="search" ></ion-icon>
       </button>
-      <button ion-button clear icon-only  (click)="presentPopover($event)">
+      <!--<button ion-button clear icon-only  (click)="presentPopover($event)">
         <ion-icon color="dark" name="more" ></ion-icon>
-      </button>
+      </button>-->
     </ion-buttons>
   </ion-toolbar>
 
@@ -29,7 +29,15 @@
 
 </ion-header>
 
+
+
 <ion-content class="list-avatar-page">
+
+  <ion-refresher
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      (ionRefresh)="doRefresh($event)">
+  </ion-refresher>
 
   <ion-list>
 
