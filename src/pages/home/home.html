@@ -1,7 +1,10 @@
 <!--https://www.joshmorony.com/ionic-2-how-to-use-google-maps-geolocation-video-tutorial/-->
 <ion-header>
+
   <ion-toolbar *ngIf="!search">
-    <ion-title>Stations</ion-title>
+  <ion-title >Stations</ion-title>
+
+
     <ion-buttons end>
       <button ion-button clear icon-only  (click)="setSearch()">
         <ion-icon color="dark" name="search" ></ion-icon>
@@ -10,6 +13,7 @@
         <ion-icon color="dark" name="more" ></ion-icon>
       </button>-->
     </ion-buttons>
+
   </ion-toolbar>
 
   <ion-searchbar *ngIf="search"
@@ -36,7 +40,7 @@
   <ion-refresher
       pullingIcon="arrow-dropdown"
       refreshingSpinner="circles"
-      (ionRefresh)="doRefresh($event)">
+      (ionRefresh)="doRefresh($event)" >
   </ion-refresher>
 
   <ion-list>
